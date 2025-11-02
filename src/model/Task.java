@@ -2,7 +2,7 @@ package model;
 
 public class Task {
     private final int id;
-    private final String description;
+    private String description;
     private boolean done;
 
     public Task(int id, String description) {
@@ -18,6 +18,7 @@ public class Task {
     public void setDone(boolean done){
         this.done = done;
     }
+    public void setDescription(String description){ this.description = description; }
 
     @Override
     public String toString() {
