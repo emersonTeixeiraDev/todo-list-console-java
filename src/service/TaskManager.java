@@ -56,6 +56,32 @@ public class TaskManager {
         }
     }
 
+    public void editTask(int id, String newDescription) {
+        for (Task t : tasks) {
+            if (t.getId() == id) {
+                t.setDescription(newDescription);
+                saveTasks();
+                return;
+            }
+        }
+    }
+
+    public List<Task> getPendingTasks() {
+        List<Task> pending = new ArrayList<>();
+        for (Task t : tasks) {
+            if (!t.isDone()) pending.add(t);
+        }
+        return pending;
+    }
+
+    public List<Task> getCompletedTasks() {
+        List<Task> completed = new ArrayList<>();
+        for (Task t : tasks) {
+            if (t.isDone()) completed.add(t);
+        }
+        return completed;
+    }
+
     private void loadTasks(){
     File file = new File(FILE_PATH);
         if (!file.exists()) return;
