@@ -14,7 +14,7 @@ public class TaskManager {
     }
 
     public void addTask(String description){
-        int id = tasks.size()+1;
+        int id = tasks.isEmpty() ? 1 : tasks.get(tasks.size() - 1).getId() + 1;
         tasks.add(new Task (id, description));
         saveTasks();
     }
@@ -42,6 +42,7 @@ public class TaskManager {
 
     public void removeTasks(int id){
         tasks.removeIf(task -> task.getId() == id);
+        reassignIds();
         saveTasks();
     }
 
@@ -53,6 +54,16 @@ public class TaskManager {
             }
         }catch (IOException e){
             System.out.println("Erro ao salvar tarefa" + e.getMessage());
+        }
+    }
+
+    private void reassignIds(){
+        for (int i = 0; i < tasks.size(); i++) {
+            Task old = tasks.get(i);
+            // Criar uma nova tarefa com novo ID preservando dados
+            Task updated = new Task(i + 1, old.getDescription());
+            updated.setDone(old.isDone());
+            tasks.set(i, updated);
         }
     }
 
